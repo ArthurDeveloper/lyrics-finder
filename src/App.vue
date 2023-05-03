@@ -1,4 +1,16 @@
+<script lang="ts">
+	import SearchForm from './components/SearchForm.vue';
+
+	export default {
+		components: {
+			SearchForm
+		}
+	};
+</script>
+
+
 <template>
-	Hello, world!
+	<h1>Lyrcs finder</h1>
+	<SearchForm />
 </template>
 
