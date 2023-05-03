@@ -10,7 +10,7 @@
 
 
 <template>
-	<h1>Lyrcs finder</h1>
+	<h1>Lyrics finder</h1>
 	<SearchForm />
 </template>
 
