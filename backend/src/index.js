@@ -7,10 +7,23 @@ const db = new sqlite3.Database(path.resolve(__dirname, '../lyrics.db'), sqlite3
 const app = express();
 
 app.get('/lyrics/:song', (req, res) => {
-	console.log(req.params.song);
-
 	const song = `${req.params.song}%`;
 	db.all('SELECT * FROM lyrics WHERE SName LIKE ? LIMIT 20', [song], (err, rows) => {
+		if (err) {
+			return console.error(err.message);
+		}
+
+		return res.json({
+			songs: rows
+		});
+	});
+});
+
+app.get('/lyrics/:song/:author', (req, res) => {
+	const song = `${req.params.song}%`;
+	const author = `/%${req.params.author.toLowerCase().split(' ').join('-')}%/`;
+	console.log(author);
+	db.all('SELECT * FROM lyrics WHERE SName LIKE ? AND ALink LIKE ? LIMIT 20', [song, author], (err, rows) => {
 		if (err) {
 			return console.error(err.message);
 		}
