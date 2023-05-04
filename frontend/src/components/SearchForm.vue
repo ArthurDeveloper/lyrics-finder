@@ -14,8 +14,13 @@
 				const response = await fetch(`http://localhost:8000/lyrics/${this.title}/${this.author}`);
 				const data = await response.json();
 
+				console.log(data);
 				if (response.status === 200) {
-					this.response = data.Lyric.replaceAll('\n', '<br>');
+					if (data.songs) {
+						this.response = data.songs[0].Lyric.replaceAll('\n', '<br>')
+					} else {
+						this.response = data.Lyric.replaceAll('\n', '<br>');
+					}
 				} else {
 					this.response = 'No lyrics found';
 				}
