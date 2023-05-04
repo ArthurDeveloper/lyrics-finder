@@ -9,13 +9,14 @@ const app = express();
 app.get('/lyrics/:song', (req, res) => {
 	console.log(req.params.song);
 
-	db.get('SELECT * FROM lyrics WHERE SName LIKE \'%?%\'', [req.params.song], (err, rows) => {
+	const song = `${req.params.song}%`;
+	db.all('SELECT * FROM lyrics WHERE SName LIKE ? LIMIT 20', [song], (err, rows) => {
 		if (err) {
 			return console.error(err.message);
 		}
 
 		return res.json({
-			data: rows
+			songs: rows
 		});
 	});
 });
