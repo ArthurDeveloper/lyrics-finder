@@ -16,6 +16,9 @@
 				this.loading = true;
 				this.response = '';
 
+				this.author = this.author.trimStart().trimEnd();
+				this.title = this.title.trimStart().trimEnd();
+
 				async function fetchWithTimeout(resource: string, timeout: number, action: Function) {
 					const controller = new AbortController();
 					const id = setTimeout(() => {
@@ -40,7 +43,7 @@
 						this.response = 'No lyrics found';
 					}
 				);
-				
+
 				if (aborted) {
 					return;
 				}

@@ -5,7 +5,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+	"lib": [
+		"ES2019",
+		"DOM"
+	]
   },
 
   "references": [
