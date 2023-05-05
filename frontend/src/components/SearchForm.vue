@@ -1,17 +1,49 @@
 <script lang="ts">
+	import LoadingDots from './LoadingDots.vue';
+
 	export default {
 		data() {
 			return {
 				author: '',
 				title: '',
-				response: ''
+				response: '',
+				loading: false,
 			}
 		},
 		methods: {
 			async search(e: Event) {
 				e.preventDefault();
+				this.loading = true;
+				this.response = '';
 
-				const response = await fetch(`http://localhost:8000/lyrics/${this.title}/${this.author}`);
+				async function fetchWithTimeout(resource: string, timeout: number, action: Function) {
+					const controller = new AbortController();
+					const id = setTimeout(() => {
+						controller.abort();
+						action();
+					}, timeout);
+
+					const response = await fetch(resource, {
+						signal: controller.signal
+					});
+					clearTimeout(id);
+
+					return response;
+				}
+
+				let aborted = false;
+				const response = await fetchWithTimeout(
+					`http://localhost:8000/lyrics/${this.title}/${this.author}`, 10000,
+					() => {
+						aborted = true;
+						this.loading = false;
+						this.response = 'No lyrics found';
+					}
+				);
+				
+				if (aborted) {
+					return;
+				}
 				const data = await response.json();
 
 				console.log(data);
@@ -24,7 +56,12 @@
 				} else {
 					this.response = 'No lyrics found';
 				}
+
+				this.loading = false;
 			}
+		},
+		components: {
+			LoadingDots,
 		}
 	}
 </script>
@@ -36,5 +73,7 @@
 		<button type="submit" @click="search">Search 🔎</button>
 
 		<h2 v-html="response"></h2>
+
+		<LoadingDots v-if="loading"/>
 	</form>
 </template>
