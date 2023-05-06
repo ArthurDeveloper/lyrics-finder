@@ -1,5 +1,11 @@
 <script lang="ts">
 	import LoadingDots from './LoadingDots.vue';
+	import SongCard from './SongCard.vue';
+
+	type Song = {
+		ALink: string,
+		SName: string,
+	}
 
 	export default {
 		data() {
@@ -8,6 +14,7 @@
 				title: '',
 				response: '',
 				loading: false,
+				songs: new Array<Song>(),
 			}
 		},
 		methods: {
@@ -15,6 +22,7 @@
 				e.preventDefault();
 				this.loading = true;
 				this.response = '';
+				this.songs = [];
 
 				this.author = this.author.trimStart().trimEnd();
 				this.title = this.title.trimStart().trimEnd();
@@ -36,7 +44,7 @@
 
 				let aborted = false;
 				const response = await fetchWithTimeout(
-					`http://localhost:8000/lyrics/${this.title}/${this.author}`, 10000,
+					`http://localhost:8000/lyrics/${this.title}/${this.author}`, 15000,
 					() => {
 						aborted = true;
 						this.loading = false;
@@ -52,7 +60,17 @@
 				console.log(data);
 				if (response.status === 200) {
 					if (data.songs) {
-						this.response = data.songs[0].Lyric.replaceAll('\n', '<br>')
+						for (const song of data.songs) {
+							const titleCase = (str: string) => {
+								return str.split(' ').map((part) => {
+									return [part[0].toUpperCase(), part.slice(1)].join('')
+								}).join(' ');
+							}
+
+							song.ALink = titleCase(song.ALink.split('-').join(' ').replaceAll('/', ''));
+						}
+
+						this.songs = data.songs.sort((a: Song, b: Song) => a.SName > b.SName ? 1 : -1);
 					} else {
 						this.response = data.Lyric.replaceAll('\n', '<br>');
 					}
@@ -65,17 +83,21 @@
 		},
 		components: {
 			LoadingDots,
-		}
+			SongCard,
+		},
 	}
 </script>
 
 <template>
 	<form>
-		<input type="text" placeholder="Author" aria-placeholder="Author" v-model="author" />
-		<input type="text" placeholder="Title" aria-placeholder="Title" v-model="title" />	
+		<input type="text" placeholder="Author (optional)" v-model="author" />
+		<input type="text" placeholder="Title" v-model="title" />	
 		<button type="submit" @click="search">Search 🔎</button>
 
 		<h2 v-html="response"></h2>
+		<div v-for="song of songs">
+			<SongCard :author="song.ALink" :name="song.SName" />
+		</div>
 
 		<LoadingDots v-if="loading"/>
 	</form>
