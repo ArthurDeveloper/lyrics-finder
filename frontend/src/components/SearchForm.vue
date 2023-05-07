@@ -95,10 +95,6 @@
 		<button type="submit" @click="search">Search 🔎</button>
 
 		<h2 v-html="response"></h2>
-		<div v-for="song of songs">
-			<SongCard :author="song.ALink" :name="song.SName" />
-		</div>
-
-		<LoadingDots v-if="loading"/>
+		
 	</form>
 </template>

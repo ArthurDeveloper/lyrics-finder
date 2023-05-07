@@ -3,7 +3,7 @@
 		props: {
 			author: String,
 			name: String,
-		}
+		},
 	};
 </script>
 
