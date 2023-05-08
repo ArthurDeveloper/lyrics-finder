@@ -18,67 +18,9 @@
 			}
 		},
 		methods: {
-			async search(e: Event) {
+			search(e: Event) {
 				e.preventDefault();
-				this.loading = true;
-				this.response = '';
-				this.songs = [];
-
-				this.author = this.author.trimStart().trimEnd();
-				this.title = this.title.trimStart().trimEnd();
-
-				async function fetchWithTimeout(resource: string, timeout: number, action: Function) {
-					const controller = new AbortController();
-					const id = setTimeout(() => {
-						controller.abort();
-						action();
-					}, timeout);
-
-					const response = await fetch(resource, {
-						signal: controller.signal
-					});
-					clearTimeout(id);
-
-					return response;
-				}
-
-				let aborted = false;
-				const response = await fetchWithTimeout(
-					`http://localhost:8000/lyrics/${this.title}/${this.author}`, 15000,
-					() => {
-						aborted = true;
-						this.loading = false;
-						this.response = 'No lyrics found';
-					}
-				);
-
-				if (aborted) {
-					return;
-				}
-				const data = await response.json();
-
-				console.log(data);
-				if (response.status === 200) {
-					if (data.songs) {
-						for (const song of data.songs) {
-							const titleCase = (str: string) => {
-								return str.split(' ').map((part) => {
-									return [part[0].toUpperCase(), part.slice(1)].join('')
-								}).join(' ');
-							}
-
-							song.ALink = titleCase(song.ALink.split('-').join(' ').replaceAll('/', ''));
-						}
-
-						this.songs = data.songs.sort((a: Song, b: Song) => a.SName > b.SName ? 1 : -1);
-					} else {
-						this.response = data.Lyric.replaceAll('\n', '<br>');
-					}
-				} else {
-					this.response = 'No lyrics found';
-				}
-
-				this.loading = false;
+				this.$router.push(`/lyrics/${this.title}/${this.author}`);
 			}
 		},
 		components: {
