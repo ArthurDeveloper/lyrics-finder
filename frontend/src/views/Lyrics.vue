@@ -15,13 +15,8 @@
 			this.loading = true;
 			this.response = '';
 
-			console.log(this.$route.params);
-
 			this.author = (this.$route.params.author as string).trimStart().trimEnd();
 			this.title = (this.$route.params.title as string).trimStart().trimEnd();
-
-			console.log(this.author);
-			console.log(this.title);
 
 			async function fetchWithTimeout(resource: string, timeout: number, action: Function) {
 				const controller = new AbortController();

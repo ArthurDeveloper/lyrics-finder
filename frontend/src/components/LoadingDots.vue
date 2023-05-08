@@ -1,5 +1,10 @@
 <style>
 	.dots-container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.dots {
 		width: 20rem;
 		height: 20rem;
 		animation: spin 700ms infinite;
@@ -58,13 +63,15 @@
 
 <template>
 	<div class="dots-container">
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
-		<div class="dot"></div>
+		<div class="dots">
+			<div class="dot"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+			<div class="dot"></div>
+		</div>
 	</div>
 </template>
