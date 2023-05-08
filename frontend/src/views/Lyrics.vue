@@ -73,18 +73,25 @@
 
 	.lyrics {
 		padding: 1.5rem;
-		border: 1px solid #eee;
+		background: #25282e;
+		border-radius: 0.2rem;
 		font-size: 1.5rem;
+		transition: all 500ms ease;
+	}
+
+	.lyrics:hover {
+		box-shadow: 0px 0px 12px 3px #121212;
+		transform: translateY(-0.5rem);
 	}
 
 	.lyrics-line {
-		color: #555;
+		color: #919191;
 		transition: all 300ms ease;
-		margin-bottom: 1.5rem;
+		padding-bottom: 1.5rem;
 	}
 
 	.lyrics-line:hover {
-		color: #000;
+		color: #fff;
 		cursor: pointer;
 		transform: scale(1.2) translateX(3rem);
 	}

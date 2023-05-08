@@ -47,8 +47,10 @@
 		font-size: 1rem;
 		margin-top: 0.5rem;
 		border: none;
-		border-bottom: 1px solid gray;
+		border-bottom: 1px solid #999;
+		color: #eee;
 		border-radius: none;
+		background: transparent;
 	}
 
 	button[type="submit"] {
