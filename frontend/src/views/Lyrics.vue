@@ -50,7 +50,9 @@
 			const data = await response.json();
 
 			if (response.status === 200) {
-				this.response = data.Lyric.replaceAll('\n', '<br>');
+				this.response = (data.Lyric as string).split('\n').map((part) => {
+					return `<div class="lyrics-line">${part}</div>`;
+				}).join('');
 			} else {
 				this.response = 'No lyrics found';
 			}
@@ -63,8 +65,35 @@
 	}
 </script>
 
+<style>
+	.lyrics-container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.lyrics {
+		padding: 1.5rem;
+		border: 1px solid #eee;
+		font-size: 1.5rem;
+	}
+
+	.lyrics-line {
+		color: #555;
+		transition: all 300ms ease;
+		margin-bottom: 1.5rem;
+	}
+
+	.lyrics-line:hover {
+		color: #000;
+		cursor: pointer;
+		transform: scale(1.2) translateX(3rem);
+	}
+</style>
+
 <template>
-	<p v-html="response"></p>
+	<div class="lyrics-container" v-if="response">
+		<p class="lyrics" v-html="response"></p>
+	</div>
 
 	<LoadingDots v-if="loading" />
 </template>
