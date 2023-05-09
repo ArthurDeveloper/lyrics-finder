@@ -76,8 +76,25 @@
 	}
 </script>
 
+<style>
+	.song-list {
+		display: flex;
+		flex-direction: column;
+		margin-top: 2rem;
+		padding-right: 5rem;
+		padding-left: 5rem;
+	}
+
+	@media (max-width: 576px) {
+		.song-list {
+			padding-right: 1rem;
+			padding-left: 1rem;
+		}
+	}
+</style>
+
 <template>
-	<div v-for="song of songs">
+	<div class="song-list" v-for="song of songs">
 		<div @click="() => $router.push(`/lyrics/${song.SName}/${song.ALink}`)">
 			<SongCard :author="song.ALink" :name="song.SName" />
 		</div>
