@@ -63,6 +63,13 @@
 		color: #eee;
 		border-radius: none;
 		background: transparent;
+		transition: all 150ms ease;
+	}
+
+	input[type="text"]:hover, input[type="text"]:focus {
+		border-color: #2ba4f0;
+		border-width: 3px;
+		outline: none;
 	}
 
 	button[type="submit"] {
@@ -76,6 +83,7 @@
 		background: none;
 		transition: all 100ms ease;
 		margin-top: 1rem;
+		outline: none;
 	}
 
 	button[type="submit"]::before {
@@ -88,13 +96,13 @@
 		content: "";
 	}
 
-	button[type="submit"]:hover {
+	button[type="submit"]:hover, button[type="submit"]:focus {
 		color: #fff;
 		cursor: pointer;
 		border-color: #2ba4f0;
 	}
 
-	button[type="submit"]:hover::before {
+	button[type="submit"]:hover::before, button[type="submit"]:focus::before {
 		top: 0;
 		height: 100%;
 		z-index: -1;
