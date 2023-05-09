@@ -15,14 +15,28 @@
 		overflow-x: hidden;
 	}
 
-	h1 {
-		text-align: center;
+	.logo-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 4rem;
 		margin-bottom: 4rem;
+		padding: 5px;
+	}
+
+	.logo {
+		transition: all 200ms ease;
+	}
+
+	.logo:hover {
+		filter: brightness(2);
+		cursor: pointer;
 	}
 </style>
 
 <template>
-	<h1>Lyrics finder</h1>
+	<div class="logo-container">
+		<img class="logo" src="./assets/logo.png" />
+	</div>
 	<SearchForm />
 
 	<RouterView />
