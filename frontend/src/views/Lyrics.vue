@@ -69,6 +69,7 @@
 	.lyrics-container {
 		display: flex;
 		justify-content: center;
+		margin-top: 2rem;
 	}
 
 	.lyrics {
@@ -80,7 +81,7 @@
 	}
 
 	.lyrics:hover {
-		box-shadow: 0px 0px 12px 3px #121212;
+		box-shadow: 0px 0px 12px 3px #040404;
 		transform: translateY(-0.5rem);
 	}
 

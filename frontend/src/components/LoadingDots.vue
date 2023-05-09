@@ -22,7 +22,7 @@
 		position: absolute;
 		left: calc(50% - 1rem);
 		top: calc(50% - 1rem);
-		background: #000;
+		background: #fff;
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;

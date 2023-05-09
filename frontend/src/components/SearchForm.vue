@@ -79,7 +79,7 @@
 	button[type="submit"]:hover {
 		color: #fff;
 		cursor: pointer;
-		border: none;
+		border-color: #2ba4f0;
 	}
 
 	button[type="submit"]:hover::before {
