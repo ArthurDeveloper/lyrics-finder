@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LoadingDots from './LoadingDots.vue';
 	import SongCard from './SongCard.vue';
+	import ErrorSnack from './ErrorSnack.vue';
 
 	type Song = {
 		ALink: string,
@@ -15,17 +16,28 @@
 				response: '',
 				loading: false,
 				songs: new Array<Song>(),
+				error: '',
 			}
 		},
 		methods: {
 			search(e: Event) {
 				e.preventDefault();
+
+				if (!this.title) {
+					this.error = 'You need to provide at least a title!';
+					setTimeout(() => {
+						this.error = '';
+					}, 3000);
+					return;
+				}
+
 				this.$router.push(`/lyrics/${this.title}/${this.author}`);
 			}
 		},
 		components: {
 			LoadingDots,
 			SongCard,
+			ErrorSnack
 		},
 	}
 </script>
@@ -97,4 +109,6 @@
 		<input type="text" placeholder="Title" v-model="title" />	
 		<button type="submit" @click="search">Search 🔎</button>
 	</form>
+
+	<ErrorSnack v-if="error" :message="error" />
 </template>
