@@ -39,6 +39,6 @@
 	</div>
 	<SearchForm />
 
-	<RouterView />
+	<RouterView :key="$route.fullPath" />
 </template>
 

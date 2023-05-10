@@ -35,7 +35,7 @@
 
 			let aborted = false;
 			const response = await fetchWithTimeout(
-				`http://localhost:8000/lyrics/${this.title}/${this.author}`, 15000,
+				`http://localhost:8000/lyrics/${this.title}/${this.author}`, 30000,
 				() => {
 					aborted = true;
 					this.loading = false;

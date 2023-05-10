@@ -16,6 +16,9 @@
 		padding-left: 1.5rem;
 		transition: all 100ms ease-in-out;
 		background: #0d0e0f;
+		animation-name: slide-in;
+		animation-duration: 300ms;
+		animation-timing-function: ease-in;
 	}
 
 	.song-card:hover {
@@ -41,6 +44,12 @@
 		font-size: 1rem;
 		font-weight: 400;
 		color: #fff;
+	}
+
+	@keyframes slide-in {
+		0% { transform: translateX(-30rem) scale(2); opacity: 0; }
+		80% { transform: translateX(-2rem) scale(1); opacity: 1; }
+		100% { transform: translateX(0); opacity: 1; }
 	}
 </style>
 
