@@ -94,9 +94,9 @@
 </style>
 
 <template>
-	<div class="song-list" v-for="song of songs">
-		<div @click="() => $router.push(`/lyrics/${song.SName}/${song.ALink}`)">
-			<SongCard :author="song.ALink" :name="song.SName" />
+	<div class="song-list">
+		<div @click="() => $router.push(`/lyrics/${song.SName}/${song.ALink}`)"  v-for="(song, index) in songs">
+			<SongCard :author="song.ALink" :name="song.SName" :timeout="300 + (index + 1) * 100" />
 		</div>
 	</div>
 

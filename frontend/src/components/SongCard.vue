@@ -3,7 +3,21 @@
 		props: {
 			author: String,
 			name: String,
+			timeout: Number,
 		},
+		data() {
+			return {
+				animation: '',
+				translation: '',
+			}
+		},
+		mounted() {
+			this.translation = '-300%';
+			setTimeout(() => {
+				this.animation = `slide-in ${this.timeout}ms ease`;
+				this.translation = '0%';
+			}, this.timeout);
+		}
 	};
 </script>
 
@@ -14,11 +28,9 @@
 		align-items: center;
 		border: 1px solid #999;
 		padding-left: 1.5rem;
-		transition: all 100ms ease-in-out;
+		transition: all 100ms ease;
 		background: #0d0e0f;
-		animation-name: slide-in;
-		animation-duration: 300ms;
-		animation-timing-function: ease-in;
+		margin-top: 2rem;
 	}
 
 	.song-card:hover {
@@ -47,14 +59,18 @@
 	}
 
 	@keyframes slide-in {
-		0% { transform: translateX(-30rem) scale(2); opacity: 0; }
-		80% { transform: translateX(-2rem) scale(1); opacity: 1; }
-		100% { transform: translateX(0); opacity: 1; }
+		from {
+			transform: translateX(-100%) scale(1.2);
+			opacity: 0;
+		} to {
+			transform: translateX(0) scale(1);
+			opacity: 1;
+		}
 	}
 </style>
 
 <template>
-	<div class="song-card">
+	<div class="song-card" v-bind:style="{ animation, transform: `translateX(${translation})` }">
 		<h3 class="song-name">{{ name }}</h3>
 		<div class="divider"></div>
 		<h5 class="author-name">{{ author }}</h5>
