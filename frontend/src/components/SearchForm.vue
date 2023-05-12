@@ -113,9 +113,9 @@
 
 <template>
 	<form>
-		<input type="text" placeholder="Author (optional)" v-model="author" />
-		<input type="text" placeholder="Title" v-model="title" />	
-		<button type="submit" @click="search">Search 🔎</button>
+		<input type="text" :placeholder="$t('message.authorPlaceholder')" v-model="author" />
+		<input type="text" :placeholder="$t('message.titlePlaceholder')" v-model="title" />	
+		<button type="submit" @click="search">{{  $t('message.searchButton')  }}</button>
 	</form>
 
 	<ErrorSnack v-if="error" :message="error" />

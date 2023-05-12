@@ -36,7 +36,7 @@
 	.song-card:hover {
 		cursor: pointer;
 		box-shadow: 13px 10px 0px 7px #000;
-		transform: translate(-0.3rem, -0.3rem);
+		transform: translate(-0.3rem, -0.3rem) !important;
 	}
 
 	.divider {
