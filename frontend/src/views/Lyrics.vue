@@ -8,7 +8,8 @@
 				loading: true,
 				response: '',
 				author: '',
-				title: ''
+				title: '',
+				shouldBeTranslated: false
 			}
 		},
 		async mounted() {
@@ -53,6 +54,16 @@
 				this.response = (data.Lyric as string).split('\n').map((part) => {
 					return `<div class="lyrics-line">${part}</div>`;
 				}).join('');
+
+				let userLanguage = '';
+
+				if (navigator.language.includes('pt')) {
+					userLanguage = 'pt';
+				} else {
+					userLanguage = 'en';
+				}
+
+				this.shouldBeTranslated = data.language !== userLanguage;
 			} else {
 				this.response = 'No lyrics found';
 			}
@@ -68,7 +79,8 @@
 <style>
 	.lyrics-container {
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		align-items: center;
 		margin-top: 2rem;
 	}
 
@@ -96,10 +108,24 @@
 		cursor: pointer;
 		transform: scale(1.2) translateX(3rem);
 	}
+
+	.translate-button {
+		background: none;
+		border: none;
+		color: #555;
+		transition: all 200ms ease;
+		padding: 0.5rem;
+	}
+
+	.translate-button:hover {
+		cursor: pointer;
+		background: #3335;
+	}
 </style>
 
 <template>
 	<div class="lyrics-container" v-if="response">
+		<button class="translate-button" v-if="shouldBeTranslated">{{ $t('message.translateButton') }}</button>
 		<p class="lyrics" v-html="response"></p>
 	</div>
 
