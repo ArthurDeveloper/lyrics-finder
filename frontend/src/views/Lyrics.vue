@@ -137,6 +137,7 @@
 		padding: 1.5rem;
 		background: #25282e;
 		border-radius: 0.2rem;
+		font-family: 'Inter', sans-serif;
 		font-size: 1.5rem;
 		transition: all 500ms ease;
 	}
@@ -164,6 +165,7 @@
 		color: #555;
 		transition: all 200ms ease;
 		padding: 0.5rem;
+		font-family: 'Inter', sans-serif;
 	}
 
 	.translate-button:hover {

@@ -64,6 +64,7 @@
 		border-radius: none;
 		background: transparent;
 		transition: all 150ms ease;
+		font-family: 'Inter', sans-serif;
 	}
 
 	input[type="text"]:hover, input[type="text"]:focus {
@@ -84,6 +85,7 @@
 		transition: all 100ms ease;
 		margin-top: 1rem;
 		outline: none;
+		font-family: 'Inter', sans-serif;
 	}
 
 	button[type="submit"]::before {
