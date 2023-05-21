@@ -12,6 +12,7 @@ const messages = {
 			titlePlaceholder: 'Title',
 			searchButton: 'Search 🔎',
 			translateButton: 'TRANSLATE',
+			showOriginalButton: 'SHOW ORIGINAL',
 		}
 	},
 	pt: {
@@ -20,6 +21,7 @@ const messages = {
 			titlePlaceholder: 'Título',
 			searchButton: 'Buscar 🔎',
 			translateButton: 'TRADUZIR',
+			showOriginalButton: 'MOSTRAR ORIGINAL',
 		}
 	}
 }

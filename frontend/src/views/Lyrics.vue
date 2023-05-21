@@ -5,15 +5,19 @@
 		data() {
 			return {
 				lyrics: '',
+				translated: '',
 				loading: true,
 				response: '',
 				author: '',
 				title: '',
-				shouldBeTranslated: false
+				shouldBeTranslated: false,
+				isShowingTranslated: false,
+				userLanguage: '',
 			}
 		},
 		async mounted() {
 			this.loading = true;
+			this.lyrics = '';
 			this.response = '';
 
 			this.author = (this.$route.params.author as string).trimStart().trimEnd();
@@ -51,28 +55,73 @@
 			const data = await response.json();
 
 			if (response.status === 200) {
-				this.response = (data.Lyric as string).split('\n').map((part) => {
+				this.lyrics = data.Lyric;
+
+				this.response = (this.lyrics as string).split('\n').map((part) => {
 					return `<div class="lyrics-line">${part}</div>`;
 				}).join('');
 
-				let userLanguage = '';
-
 				if (navigator.language.includes('pt')) {
-					userLanguage = 'pt';
+					this.userLanguage = 'pt';
 				} else {
-					userLanguage = 'en';
+					this.userLanguage = 'en';
 				}
 
-				this.shouldBeTranslated = data.language !== userLanguage;
+				this.shouldBeTranslated = data.language !== this.userLanguage;
 			} else {
 				this.response = 'No lyrics found';
 			}
 
 			this.loading = false;
 		},
+		methods: {
+			async translate() {
+				this.isShowingTranslated = true;
+
+				if (this.translated !== '') {
+					this.response = (this.translated as string).split('\n').map((part) => {
+						return `<div class="lyrics-line">${part}</div>`;
+					}).join('');
+					
+					return;
+				}
+
+				this.loading = true;
+
+				const response = await fetch('http://localhost:8000/lyrics/translate', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						'lyrics': this.lyrics.replaceAll('\n', ' '),
+						'to': this.userLanguage
+					}),
+				});
+
+				const data = await response.json();
+
+				this.translated = data.translated;
+
+				this.response = (this.translated as string).split('\n').map((part) => {
+					return `<div class="lyrics-line">${part}</div>`;
+				}).join('');
+
+				this.loading = false;
+
+				console.log(data);
+			},
+			async showOriginal() {
+				this.isShowingTranslated = false;
+
+				this.response = (this.lyrics as string).split('\n').map((part) => {
+					return `<div class="lyrics-line">${part}</div>`;
+				}).join('');
+			}
+		},
 		components: {
 			LoadingDots,
-		}
+		},
 	}
 </script>
 
@@ -124,8 +173,12 @@
 </style>
 
 <template>
-	<div class="lyrics-container" v-if="response">
-		<button class="translate-button" v-if="shouldBeTranslated">{{ $t('message.translateButton') }}</button>
+	<div class="lyrics-container" v-if="response && !loading">
+		<button class="translate-button" v-if="shouldBeTranslated" @click="() => {
+			isShowingTranslated ? showOriginal() : translate();
+		}">
+			{{ isShowingTranslated ? $t('message.showOriginalButton') : $t('message.translateButton') }}
+		</button>
 		<p class="lyrics" v-html="response"></p>
 	</div>
 
