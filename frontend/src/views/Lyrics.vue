@@ -1,7 +1,8 @@
 <script lang="ts">
 	import LoadingDots from '@/components/LoadingDots.vue';
+	import { defineComponent } from 'vue';
 
-	export default {
+	export default defineComponent({
 		data() {
 			return {
 				lyrics: '',
@@ -20,8 +21,8 @@
 			this.lyrics = '';
 			this.response = '';
 
-			this.author = (this.$route.params.author as string).trimStart().trimEnd();
-			this.title = (this.$route.params.title as string).trimStart().trimEnd();
+			this.author = ((this as any).$route.params.author as string).trimStart().trimEnd();
+			this.title = ((this as any).$route.params.title as string).trimStart().trimEnd();
 
 			async function fetchWithTimeout(resource: string, timeout: number, action: Function) {
 				const controller = new AbortController();
@@ -123,7 +124,7 @@
 		components: {
 			LoadingDots,
 		},
-	}
+	});
 </script>
 
 <style>

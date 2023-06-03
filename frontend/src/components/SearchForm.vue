@@ -31,7 +31,7 @@
 					return;
 				}
 
-				this.$router.push({ path: `/lyrics/${this.title}/${this.author}` });
+				(this as any).$router.push({ path: `/lyrics/${this.title}/${this.author}` });
 			}
 		},
 		components: {
