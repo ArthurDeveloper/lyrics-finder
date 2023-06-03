@@ -55,6 +55,7 @@
 			const data = await response.json();
 
 			if (response.status === 200) {
+				this.title = data.SName;
 				this.lyrics = data.Lyric;
 
 				this.response = (this.lyrics as string).split('\n').map((part) => {
@@ -126,6 +127,14 @@
 </script>
 
 <style>
+	.song-title {
+		color: #fff;
+		font-family: 'Inter', sans-serif;
+		text-align: center;
+		margin-top: 4rem;
+		font-size: 2.2rem;
+	}
+
 	.lyrics-container {
 		display: flex;
 		flex-direction: column;
@@ -156,7 +165,7 @@
 	.lyrics-line:hover {
 		color: #fff;
 		cursor: pointer;
-		transform: scale(1.2) translateX(3rem);
+		transform: scale(1.05) translateX(1rem);
 	}
 
 	.translate-button {
@@ -175,6 +184,8 @@
 </style>
 
 <template>
+	<h2 class="song-title">{{ title  }}</h2>
+	
 	<div class="lyrics-container" v-if="response && !loading">
 		<button class="translate-button" v-if="shouldBeTranslated" @click="() => {
 			isShowingTranslated ? showOriginal() : translate();
